@@ -6,27 +6,28 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 13928c591ec051c5aa43dcf063a2fa1b8000d39e9abe0bb5c9e716036d831830
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: '{{ PYTHON }} -m pip install . --install-option="--skip-npm" -vv'
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
     - jupyter-packaging >=0.7.9,<0.8.0
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - ipywidgets >=7.6.0,<8
 
 test:
   requires:
     - jupyterlab =3
     - pip
+    - python {{ python_min }}
   imports:
     - jupyter_containds
   commands:
